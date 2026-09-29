@@ -1,7 +1,7 @@
 <a href="https://youssef.fi">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/name-dark.svg">
-    <img alt="Youssef Mansour" src="assets/name-light.svg" width="351">
+    <img alt="Youssef Mansour" src="assets/name-light.svg" width="290">
   </picture>
 </a>
 

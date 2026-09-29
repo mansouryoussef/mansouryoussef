@@ -1,12 +1,13 @@
 """Generate the README's name wordmark (light and dark) into ../assets.
 
-The wordmark is the only image on the profile: the name set in Newsreader, a serif that
-GitHub's own fonts cannot provide. Everything else in the README is plain text so it
-stays sharp, searchable and readable on phones.
+The wordmark is the only image on the profile: the name set in Mona Sans, GitHub's own
+typeface, which pairs with the system fonts GitHub uses for the rest of the page.
+Everything else in the README is plain text so it stays sharp, searchable and readable
+on phones.
 
 The SVG is sized tightly to the glyphs and shown at its natural width, so it never
 scales down on mobile. Transparent background, GitHub's own text colours per theme.
-Font: Newsreader (SIL OFL) from Google Fonts, subset to the name, fetched into
+Font: Mona Sans (SIL OFL) from Google Fonts, subset to the name, fetched into
 scripts/fonts/ on first run (not committed): TTF to measure, woff2 to embed.
 
     python3 scripts/build.py
@@ -25,10 +26,12 @@ OUT = os.path.join(HERE, "..", "assets")
 FONTS = os.path.join(HERE, "fonts")
 
 NAME = "Youssef Mansour"
-SPEC = "Newsreader:opsz,wght@72,500"
-SIZE = 44
-TRACKING = -0.5
-GAP = 14  # transparent space under the name, so the intro does not crowd it
+FAMILY = "Mona Sans"
+WEIGHT = 500
+SPEC = "%s:wght@%d" % (FAMILY, WEIGHT)
+SIZE = 36
+TRACKING = -0.7  # about -0.02em
+GAP = 12  # transparent space under the name, so the intro does not crowd it
 COLOURS = {"light": "#1F2328", "dark": "#F0F6FC"}  # GitHub Primer fg.default
 
 CHROME_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36"
@@ -37,7 +40,7 @@ CHROME_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 
 def fetch_font():
     os.makedirs(FONTS, exist_ok=True)
     for ext, ua in (("ttf", "curl/8"), ("woff2", CHROME_UA)):
-        path = os.path.join(FONTS, "newsreader." + ext)
+        path = os.path.join(FONTS, "name." + ext)
         if os.path.exists(path):
             continue
         q = urllib.parse.urlencode({"family": SPEC, "text": NAME})
@@ -47,17 +50,17 @@ def fetch_font():
 
 
 def wordmark(colour):
-    font = ImageFont.truetype(os.path.join(FONTS, "newsreader.ttf"), SIZE)
+    font = ImageFont.truetype(os.path.join(FONTS, "name.ttf"), SIZE)
     left, top, right, bottom = font.getbbox(NAME, anchor="ls")
     w = int(round(right - left + TRACKING * (len(NAME) - 1))) + 2
     h = int(round(bottom - top)) + 4 + GAP
-    with open(os.path.join(FONTS, "newsreader.woff2"), "rb") as f:
+    with open(os.path.join(FONTS, "name.woff2"), "rb") as f:
         data = base64.b64encode(f.read()).decode()
     return ('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d" role="img" aria-label="%s">'
             '<title>%s</title>'
-            "<style>@font-face{font-family:'Newsreader';font-weight:500;src:url(data:font/woff2;base64,%s) format('woff2')}</style>"
-            '<text x="%.1f" y="%.1f" font-family="Newsreader, Georgia, serif" font-size="%d" font-weight="500" letter-spacing="%s" fill="%s">%s</text>'
-            '</svg>' % (w, h, w, h, NAME, NAME, data, -left, -top + 2, SIZE, TRACKING, colour, escape(NAME))), w, h
+            "<style>@font-face{font-family:'%s';font-weight:%d;src:url(data:font/woff2;base64,%s) format('woff2')}</style>"
+            '<text x="%.1f" y="%.1f" font-family="\'%s\', -apple-system, \'Segoe UI\', Helvetica, Arial, sans-serif" font-size="%d" font-weight="%d" letter-spacing="%s" fill="%s">%s</text>'
+            '</svg>' % (w, h, w, h, NAME, NAME, FAMILY, WEIGHT, data, -left, -top + 2, FAMILY, SIZE, WEIGHT, TRACKING, colour, escape(NAME))), w, h
 
 
 def main():
