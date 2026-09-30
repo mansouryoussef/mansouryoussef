@@ -13,7 +13,9 @@ I build production LLM agent systems, with over six years of full-stack engineer
 ### Now
 
 **Hoxhunt** · Senior AI Engineer · 2025&nbsp;–&nbsp;present<br>
-I lead the engineering of Hoxhunt's internal AI platform: autonomous AI coworkers that run 24/7 alongside Sales, Support, Marketing, Finance and RevOps. I designed and built its core systems, including evaluations, scheduling, budget enforcement, human-in-the-loop approvals and access control, and I own it in production end to end.
+I help Hoxhunt's internal teams, including Sales, Support, Marketing, Finance and RevOps, work more efficiently with AI. I work with each team to find its bottlenecks and automation opportunities, then deliver the best fit: building a custom AI agent, or helping the team get the most out of a tool like Claude Cowork.
+
+I also lead the engineering of our internal AI platform, where autonomous AI coworkers run 24/7 alongside these teams. I designed and built its core systems, including evaluations, scheduling, budget enforcement, human-in-the-loop approvals and access control, and I own it in production end to end.
 
 ### Side project
 
